@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر اوليفر</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #333, #111);
+            overflow: auto;
+            height: 100%;
+        }
+
+        .black-page {
+            position: relative;
+            width: 100%;
+            height: auto;
+            background-color: #111;
+            overflow-y: scroll;
+        }
+
+        .cart-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #ff5733;
+            color: white;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            font-size: 20px;
+        }
+
+        .store {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .product {
+            background-color: #222;
+            margin: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            width: 250px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+            text-align: center;
+            border: 3px solid red; /* حدود عريضة باللون الأحمر */
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .product-info {
+            margin-top: 15px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: red; /* تغيير اللون إلى الأحمر */
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .product-name:hover {
+            color: #ff4500;
+        }
+
+        .product-price {
+            font-size: 16px;
+            color: red; /* تغيير اللون إلى الأحمر */
+            margin-bottom: 15px;
+        }
+
+        .product-price span {
+            font-size: 20px;
+            color: #ff5733;
+            font-weight: bold;
+        }
+
+        .product button {
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .product button:hover {
+            background-color: #ff4500;
+        }
+
+        .cart-icon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #ff0000;
+            color: white;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            font-size: 20px;
+        }
+
+        .cart-popup, .payment-popup, .email-popup, .error-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #222;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            border: 3px solid red; /* إضافة حدود عريضة باللون الأحمر */
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #555;
+        }
+
+        .cart-total {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        h1 {
+            color: red;
+            font-size: 4rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .error-popup button {
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .error-popup button:hover {
+            background-color: #ff4500;
+        }
+
+        .email-popup input {
+            padding: 10px;
+            margin-top: 10px;
+            width: 200px;
+            border-radius: 5px;
+            border: none;
+            background-color: #333;
+            color: white;
+        }
+
+        .email-popup button {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            background-color: #ff5733;
+            color: white;
+            border: none;
+        }
+
+        .email-popup button:hover {
+            background-color: #ff4500;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="black-page">
+        <div class="store">
+            <h1>𝑂𝑙𝑖𝑣𝑒𝑟</h1>
+            <div class="product">
+                <img src="https://b.top4top.io/p_3263jib3a0.jpg" alt="10K مشاهدة Kick">
+                <div class="product-info">
+                    <h3 class="product-name">10K مشاهدة Kick</h3>
+                    <p class="product-price">السعر: <span>$50</span></p>
+                    <button onclick="addToCart('10K مشاهدة Kick', 50)">إضافة إلى السلة</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://i.imgur.com/YiUBgCZ.jpg" alt="Super Gaming Chair">
+                <div class="product-info">
+                    <h3 class="product-name">كرسي ألعاب سوبر</h3>
+                    <p class="product-price">السعر: <span>$199</span></p>
+                    <button onclick="addToCart('كرسي ألعاب سوبر', 199)">إضافة إلى السلة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-icon" id="cart-icon" onclick="showCart()">🛒</div>
+
+    <div class="cart-popup" id="cart-popup">
+        <h2>سلة التسوق</h2>
+        <div id="cart-items"></div>
+        <div class="cart-total" id="cart-total">المجموع: $0</div>
+        <button onclick="goToPayment()">التالي</button>
+        <button onclick="closeCart()">إغلاق</button>
+    </div>
+
+    <div class="payment-popup" id="payment-popup">
+        <h2>الدفع</h2>
+        <p>طريقة الدفع المتاحة حاليًا هي البيتكوين فقط، وذلك منعا للترصد.</p>
+        <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="Bitcoin" class="bitcoin-icon" style="width: 50px; height: 50px;">
+        <p>
+            <button onclick="showEmailPopup()">إرسل طلب ليتم إرسال لك عنوان الدفع</button>
+        </p>
+        <button onclick="closePayment()">إغلاق</button>
+    </div>
+
+    <div class="email-popup" id="email-popup">
+        <h2>أدخل بريدك الإلكتروني</h2>
+        <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+        <button onclick="submitEmail()">إرسال</button>
+        <button onclick="closeEmail()">إغلاق</button>
+    </div>
+
+    <div class="error-popup" id="error-popup">
+        <h2>يجب إضافة منتج أولًا</h2>
+        <button onclick="closeErrorPopup()">إغلاق</button>
+    </div>
+
+    <script>
+        let cart = [];
+        let totalAmount = 0;
+
+        function addToCart(productName, productPrice) {
+            const tax = productPrice * 0.05;
+            const totalPrice = productPrice + tax;
+            cart.push({ name: productName, price: productPrice, tax: tax, total: totalPrice });
+            updateCart();
+        }
+
+        function updateCart() {
+            let cartItemsContainer = document.getElementById('cart-items');
+            let cartTotal = document.getElementById('cart-total');
+            let cartIcon = document.getElementById('cart-icon');
+
+            cartItemsContainer.innerHTML = '';
+            cart.forEach(item => {
+                let cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                cartItem.innerHTML = `${item.name} - $${item.price} + ضريبة $${item.tax.toFixed(2)} = $${item.total.toFixed(2)} <button onclick="removeFromCart('${item.name}')">حذف</button>`;
+                cartItemsContainer.appendChild(cartItem);
+            });
+
+            totalAmount = cart.reduce((sum, item) => sum + item.total, 0);
+            cartTotal.innerText = `المجموع: $${totalAmount.toFixed(2)}`;
+            cartIcon.innerText = `🛒 ${cart.length}`;
+        }
+
+        function showCart() {
+            if (cart.length === 0) {
+                showErrorPopup();
+            } else {
+                document.getElementById('cart-popup').style.display = 'block';
+            }
+        }
+
+        function closeCart() {
+            document.getElementById('cart-popup').style.display = 'none';
+        }
+
+        function goToPayment() {
+            document.getElementById('cart-popup').style.display = 'none';
+            document.getElementById('payment-popup').style.display = 'block';
+        }
+
+        function closePayment() {
+            document.getElementById('payment-popup').style.display = 'none';
+        }
+
+        function showEmailPopup() {
+            document.getElementById('payment-popup').style.display = 'none';
+            document.getElementById('email-popup').style.display = 'block';
+        }
+
+        function closeEmail() {
+            document.getElementById('email-popup').style.display = 'none';
+        }
+
+        function submitEmail() {
+            let email = document.getElementById('email').value;
+            if (email) {
+                alert(`تم إرسال عنوان الدفع إلى ${email}`);
+                document.getElementById('email-popup').style.display = 'none';
+            } else {
+                alert('الرجاء إدخال بريد إلكتروني صحيح');
+            }
+        }
+
+        function showErrorPopup() {
+            document.getElementById('error-popup').style.display = 'block';
+        }
+
+        function closeErrorPopup() {
+            document.getElementById('error-popup').style.display = 'none';
+        }
+
+        function removeFromCart(productName) {
+            cart = cart.filter(item => item.name !== productName);
+            updateCart();
+        }
+    </script>
+
+</body>
+</html>
